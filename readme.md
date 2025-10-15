@@ -13,3 +13,6 @@ q to switch tools
 down + q to buy/drop items
 w on doors to enter
 p to pause
+
+Play here:
+https://trevorblythe.github.io/FixedFBLASubmission/index.html
