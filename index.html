@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>gaming</title>
+		<style>
+			@font-face {
+				font-family: eightbit;
+				src: url('PixeloidSans-nR3g1.ttf');
+			}
+			h1 {
+				font-family: eightbit;
+			}
+			* {
+				margin: 0px;
+				border: 0px;
+			}
+
+			#stage {
+				width: 900;
+				height: 480;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.topbar h2 {
+				color: white;
+			}
+			.topbar {
+				display: flex;
+				position: absolute;
+				left: 10px;
+				top: 5px;
+				width: 100vw;
+			}
+
+			body {
+				background-color: black;
+				overflow-y: hidden; /* Hide vertical scrollbar */
+				overflow-x: hidden; /* Hide horizontal scrollbar */
+			}
+			.buttonContainer {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.inv {
+				width: 900;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.inv button {
+				width: 89px;
+				height: 89px;
+				border: 1px solid orange;
+			}
+		</style>
+	</head>
+	<body>
+		<div
+			id="loadingScreen"
+			class="loadingScreen"
+			style="
+				position: absolute;
+				width: 100vw;
+				height: 100vh;
+				background: black;
+				z-index: 1;
+			"
+		>
+			<h1 style="position: absolute; top: 45vh; left: 40vw; color: white">
+				loading...
+			</h1>
+		</div>
+		<div class="topbar" id="topbar">
+			<img style="height: 60px" src="Images/heart.png" />
+			<h2 style="color: white; font-size: 60px" id="health">5</h2>
+			<div
+				id="invSlot"
+				style="
+					background-color: transparent;
+					border: 2px solid rgb(255, 255, 0);
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+			<div
+				id="invSlot2"
+				style="
+					background-color: transparent;
+					border: 2px solid white;
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+			<div
+				id="invSlot3"
+				style="
+					background-color: transparent;
+					border: 2px solid white;
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+			<div
+				id="invSlot4"
+				style="
+					background-color: transparent;
+					border: 2px solid white;
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+
+			<img src="Images/gold.png" style="width: 60px; height: 60px" />
+			<h2 id="goldcount" style="color: white; font-size: 60px">0</h2>
+			<h3
+				id="levelCount"
+				style="
+					color: white;
+
+					font-size: 30px;
+					margin-left: auto;
+					margin-right: 5vw;
+
+					order: 2;
+				"
+			>
+				level: 1
+			</h3>
+		</div>
+
+		<div id="stage">
+			<canvas
+				hidden
+				id="screen"
+				width="1800"
+				height="960"
+				style="border: solid black 5px"
+			></canvas>
+			<canvas
+				id="screen2"
+				width="900"
+				height="480"
+				style="border: solid black 1px"
+			></canvas>
+			<canvas
+				hidden
+				id="entitiesScreen"
+				width="3600"
+				height="2000"
+				style="border: solid black 5px"
+			></canvas>
+		</div>
+		<div id="deathScreen" hidden>
+			<img
+				id="deathText"
+				src="Images/text.png"
+				style="
+					z-index: 10000;
+					position: absolute;
+					left: 0px;
+					top: 150px;
+					padding-left: 30%;
+					padding-right: 50%;
+					background-color: rgba(0, 0, 0, 0.5);
+				"
+			/>
+			<h3
+				style="
+					padding-left: 35%;
+					z-index: 100;
+					padding-right: 35%;
+
+					color: white;
+					position: absolute;
+					top: 290px;
+					left: 0px;
+					font-family: eightbit;
+					width: 500px;
+					background-color: rgba(0, 0, 0, 0.5);
+				"
+				hidden
+				id="hintText"
+			>
+				Press anything to return to menu...
+			</h3>
+		</div>
+		<div
+			id="chatbox"
+			style="
+				display: flex;
+				position: absolute;
+				top: 75vh;
+				left: 0;
+				background-color: rgba(0, 0, 0, 0.5);
+				padding-right: 100vw;
+			"
+			hidden
+		>
+			<h2 style="color: white; font-family: eightbit; width: 100vw" hidden>
+				This is test text
+			</h2>
+		</div>
+		<div id="buttonContainer" class="buttonContainer"></div>
+		<script src="data.js"></script>
+		<script src="creatures.js"></script>
+		<script src="game.js"></script>
+		<script src="character.js"></script>
+		<script src="generator.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>

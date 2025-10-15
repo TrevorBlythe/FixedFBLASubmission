@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>gaming</title>
+		<style>
+			@font-face {
+				font-family: eightbit;
+				src: url("PixeloidSans-nR3g1.ttf");
+			}
+			h1 {
+				font-family: eightbit;
+			}
+			* {
+				margin: 0px;
+				border: 0px;
+			}
+
+			#stage {
+				width: 900;
+				height: 480;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.topbar h2 {
+				color: white;
+			}
+			.topbar {
+				display: flex;
+				position: absolute;
+				left: 10px;
+				top: 5px;
+				width: 100vw;
+			}
+
+			body {
+				background-color: black;
+				overflow-y: hidden; /* Hide vertical scrollbar */
+				overflow-x: hidden; /* Hide horizontal scrollbar */
+			}
+			.buttonContainer {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.inv {
+				width: 900;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.inv button {
+				width: 89px;
+				height: 89px;
+				border: 1px solid orange;
+			}
+			.shopItems h1 {
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div
+			id="loadingScreen"
+			class="loadingScreen"
+			style="position: absolute; width: 100vw; height: 100vh; background: black; z-index: 1"
+		>
+			<h1 style="position: absolute; top: 45vh; left: 40vw; color: white">loading...</h1>
+		</div>
+		<div class="topbar" id="topbar">
+			<img style="height: 60px" src="Images/heart.png" />
+			<h2 style="color: white; font-size: 60px" id="health">5</h2>
+			<div
+				id="invSlot"
+				style="
+					background-color: transparent;
+					border: 2px solid rgb(255, 255, 0);
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+			<div
+				id="invSlot2"
+				style="
+					background-color: transparent;
+					border: 2px solid white;
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+			<div
+				id="invSlot3"
+				style="
+					background-color: transparent;
+					border: 2px solid white;
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+			<div
+				id="invSlot4"
+				style="
+					background-color: transparent;
+					border: 2px solid white;
+					width: 60px;
+					height: 60px;
+					margin-left: 10px;
+					border-radius: 3px;
+				"
+			></div>
+
+			<img src="Images/gold.png" style="width: 60px; height: 60px" />
+			<h2 id="goldcount" style="color: white; font-size: 60px">0</h2>
+			<h3
+				id="levelCount"
+				style="
+					color: white;
+
+					font-size: 30px;
+					margin-left: auto;
+					margin-right: 5vw;
+
+					order: 2;
+				"
+			>
+				level: 1
+			</h3>
+		</div>
+
+		<div id="stage">
+			<canvas hidden id="screen" width="1800" height="960" style="border: solid black 5px"></canvas>
+			<canvas id="screen2" width="900" height="480" style="border: solid black 1px"></canvas>
+			<canvas hidden id="entitiesScreen" width="3600" height="2000" style="border: solid black 5px"></canvas>
+		</div>
+		<div id="deathScreen" hidden>
+			<img
+				src="Images/text.png"
+				style="
+					z-index: 10000;
+					position: absolute;
+					left: 0px;
+					top: 150px;
+					padding-left: 30%;
+					padding-right: 50%;
+					background-color: rgba(0, 0, 0, 0.5);
+				"
+			/>
+			<h3
+				style="
+					padding-left: 35%;
+					z-index: 100;
+					padding-right: 35%;
+
+					color: white;
+					position: absolute;
+					top: 290px;
+					left: 0px;
+					font-family: eightbit;
+					width: 500px;
+					background-color: rgba(0, 0, 0, 0.5);
+				"
+				hidden
+				id="hintText"
+			>
+				Press anything to return to menu...
+			</h3>
+		</div>
+		<div
+			id="storeItems"
+			class="storeItems"
+			style="
+				position: absolute;
+				display: flex;
+				color: yellow;
+				top: 50vh;
+				/* Center Horizontally: 
+                   1. Move 50% from the left.
+                   2. Use transform to move it back by 50% of its own width. */
+				left: 50%;
+				transform: translateX(-50%);
+			"
+		>
+			<h1 id="item1" style="margin-right: 50px">$</h1>
+			<h1 id="item2" style="margin-right: 50px">$</h1>
+			<h1 id="item3" style="margin-right: 50px">$</h1>
+			<h1 id="item4" style="margin-right: 50px">$</h1>
+		</div>
+		<div
+			id="chatbox"
+			style="display: flex; position: absolute; top: 75vh; left: 0; background-color: rgba(0, 0, 0, 0.5); padding-right: 100vw"
+			hidden
+			inherit
+		>
+			<h2 style="color: white; font-family: eightbit; width: 100vw">press down + Q to buy something</h2>
+		</div>
+		<div id="buttonContainer" class="buttonContainer"></div>
+		<script src="data.js"></script>
+		<script src="character.js"></script>
+		<script src="game.js"></script>
+
+		<script src="generator.js"></script>
+		<script>
+			//This will be the main js that utilizes all the classes to run the game
+			// made by trevor blythe
+			// canvas widht and height will aslways be 900 by 480
+			var chat = function (text, time) {
+				let children = document.getElementById("chatbox").children;
+				for (var i = 0; i < children.length; i++) {
+					children[i].hidden = false;
+				}
+				children[0].innerHTML = text;
+				setTimeout(function () {
+					for (var i = 0; i < children.length; i++) {
+						children[i].hidden = true;
+					}
+				}, time);
+			};
+			//at the start of the shop load decide what items to display.
+			let song = new Audio("music/nice.mp3");
+			entities.push({
+				name: "downStairs",
+				image: 11,
+				x: 130,
+				render: true,
+				y: 50,
+				width: 10,
+				gravityOff: false,
+				flipped: 1,
+				height: 10,
+				yVel: 0,
+				xVel: 0,
+				touchingGround: true,
+			});
+			entities.push({
+				name: "shop text",
+				x: 60,
+				y: 10,
+				width: 30,
+				render: true,
+				height: 15,
+				physicsOff: true,
+				image: 31,
+				takeDamage: () => {},
+			});
+			var pickedItems = [];
+			for (var i = 0; i < 4; i++) {
+				let r = Math.floor(Math.random() * items.length);
+				if (items[r].unlocked < window.localStorage.level) {
+					pickedItems.push(r);
+					document.getElementById("item" + (i + 1)).innerHTML = "$" + items[r].price;
+					entities.push({
+						name: items[r].name,
+						image: items[r].image,
+						x: 20 + 20 * (i + 1),
+						toolNum: items[r].toolNum,
+						shopItem: r,
+						price: items[r].price,
+						render: true,
+						y: 50,
+						width: 10,
+						flipped: 1,
+						height: 10,
+						xVel: 0,
+						yVel: 3,
+						physicsOff: false,
+					});
+				} else {
+					i--;
+				}
+			}
+
+			document.getElementById("levelCount").innerHTML = "level: " + window.localStorage.level;
+
+			var mapWidth = 150;
+			var mapHeight = 70;
+
+			generate(mapWidth, mapHeight, 19.5);
+
+			for (var i = 3; i < 20; i++) {
+				for (var j = 3; j < 20; j++) {
+					particles[i][j] = 1;
+				}
+			}
+
+			for (var i = 10; i < 60; i++) {
+				for (var j = 20; j < 130 - 20; j++) {
+					particles[i][j] = 1;
+				}
+			}
+
+			for (var i = 49; i < 60; i++) {
+				for (var j = 130 - 20; j < 140; j++) {
+					particles[i][j] = 1;
+				}
+			}
+
+			const times = [];
+			let fps;
+
+			var renderPix = function (i, j) {
+				var part = Math.abs(particles[i][j]);
+				var particle = pProps[Math.floor(part)];
+				if (particle.texture) {
+					canvasOneGraphics.drawImage(
+						images[particle.texture],
+						(i % (particle.resx / particle.scale)) * particle.scale,
+						(j % (particle.resy / particle.scale)) * particle.scale,
+						particle.scale,
+						particle.scale,
+						j * 2,
+						i * 2,
+						2,
+						2
+					);
+				} else {
+					var heat = (part - Math.floor(part) - 0.5) * 300;
+
+					canvasOneGraphics.fillStyle = `rgb(${particle.color[0] + heat},${particle.color[1] - heat},${
+						particle.color[2] - heat
+					})`;
+					// canvasOneGraphics.fillStyle = `rgb(${particle.color[0]},${particle.color[1]},${particle.color[2]})`;
+					canvasOneGraphics.fillRect(j * 2, i * 2, 2, 2);
+				}
+			};
+
+			var renderEntity = function (entity) {
+				if (entity.render) {
+					canvasThreeGraphics.drawImage(images[entity.image], entity.x * 4, entity.y * 4, entity.width * 4, entity.height * 4);
+				}
+			};
+
+			var fullRender = function () {
+				for (var i = 0; i < particles.length; i++) {
+					for (var j = 0; j < particles[i].length; j++) {
+						if (particles[i][j] !== 0) {
+							renderPix(i, j);
+						} else {
+							canvasOneGraphics.fillStyle = "black";
+							canvasOneGraphics.fillRect(j * 2, i * 2, 2, 2);
+						}
+					}
+				}
+				renderEntity(entities[0]);
+			};
+
+			window.onload = function () {
+				song.play();
+				fullRender();
+				chat("A shop. I should press down + Q to buy something!", 2000);
+				document.getElementById("loadingScreen").hidden = true;
+				gameloop = setInterval(function () {
+					/********
+					 * GAME LOOP
+					 * GameLOOp
+					 *
+					 *
+					 *
+					 */
+					stepParticles(
+						particles,
+						Math.max(Math.floor(frame.x), 0),
+						Math.max(Math.floor(frame.y), 0),
+						Math.min(Math.floor(frame.x) + frame.width + 10, mapWidth - 2),
+						Math.min(Math.floor(frame.y) + frame.height + 10, mapHeight - 2)
+					);
+					stepEntitiesPhysics(Math.max(frame.x, 0), Math.max(frame.y, 0), frame.x + frame.width, frame.y + frame.height);
+					canvasTwoGraphics.drawImage(canvasOne, frame.x * 2, frame.y * 2, frame.width * 2, frame.height * 2, 0, 0, 900, 480);
+					canvasTwoGraphics.drawImage(canvasThree, frame.x * 4, frame.y * 4, frame.width * 4, frame.height * 4, 0, 0, 900, 480);
+					stepCharacter();
+					// stepSnakes();
+					// eyesStep();
+					// bitersStep();
+					// frame.x = Math.min(
+					// 	Math.max(0, lerp(frame.x, entities[0].x - 75, 0.1)),
+					// 	mapWidth - frame.width
+					// );
+					// frame.y = Math.min(
+					// 	Math.max(lerp(frame.y, entities[0].y - 40, 0.1), 0),
+					// 	mapHeight - frame.height
+					// );
+					// const now = performance.now();
+					// while (times.length > 0 && times[0] <= now - 1000) {
+					// 	times.shift();
+					// }
+					// times.push(now);
+					// fps = times.length;
+					// if (Math.random() < 0.01) {
+					// 	console.log(fps);
+					// }
+				}, 16);
+			};
+		</script>
+	</body>
+</html>
