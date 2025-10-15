@@ -2,3 +2,4 @@
 
 Fixed this to run on github pages.
 Enable auto play to get music.
+Use enter to skip intro
