@@ -108,9 +108,8 @@ player.takeDamage = function (amount) {
 		setTimeout(function () {
 			document.getElementById("hintText").hidden = false;
 			document.addEventListener("keydown", function () {
-				window.location = "start.html";
+				window.location = "index.html";
 			});
-			//window.location = 'start.html';
 		}, 3000);
 	}
 };
@@ -286,9 +285,9 @@ let stepCharacter = function () {
 									//whats a better ends with check
 									//a: substring
 									if (window.location.href.slice(-13) == "tutorial.html") {
-										window.location = "start.html";
-									} else if (window.location.href.slice(-9) == "shop.html") {
 										window.location = "index.html";
+									} else if (window.location.href.slice(-9) == "shop.html") {
+										window.location = "game.html";
 									} else {
 										if ((window.localStorage.level - 1) % 3 !== 0) {
 											window.location.reload();
